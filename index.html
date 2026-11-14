@@ -4,14 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Measured Notes on AI Upscaling — UpgoLAB</title>
-<meta name="description" content="Eleven guides where every number came from ffmpeg and numpy on real files: detail retention, bits per pixel, line art, restoration, and a measured test of what rel=nofollow actually sends.">
+<meta name="description" content="Twelve guides where every number came from ffmpeg and numpy on real files: detail retention, bits per pixel, line art, restoration, and a measured test of what rel=nofollow actually sends.">
 <link rel="canonical" href="https://celticgemini001.github.io/">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Measured Notes on AI Upscaling">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"CollectionPage",
  "name":"Measured Notes on AI Upscaling",
- "description":"Eleven measured guides to AI upscaling and SEO mechanics.",
+ "description":"Twelve measured guides to AI upscaling and SEO mechanics.",
  "publisher":{"@type":"Organization","name":"UpgoLAB","url":"https://upgolab.com"}}
 </script>
 <style>
@@ -46,7 +46,7 @@ footer{margin-top:4rem;padding-top:1.4rem;border-top:1px solid var(--line);
 <body>
 <main>
 <h1>Measured Notes on AI Upscaling</h1>
-<p class="lede">Eleven guides where every number came from ffmpeg and numpy on real files.
+<p class="lede">Twelve guides where every number came from ffmpeg and numpy on real files.
 No vendor benchmarks, no preset-name arguments, and every claim has a reproduction snippet.
 Where a measurement contradicted the hypothesis, the contradiction is what got published.</p>
 
@@ -65,8 +65,14 @@ retention. On a 4× upscale of a Siemens-star test pattern:</p>
 </tbody>
 </table>
 
-<p>At 2× instead of 4×, Lanczos retains 21.5% instead of 1.3%. <strong>Halving the scale
-factor gains roughly 16× more surviving detail — far more than any choice of kernel.</strong></p>
+<p>At 2× instead of 4×, Lanczos retained 21.5% of the HF ratio against 1.3% at 4× on the
+400×400 test pattern this table came from. On a second, larger 36-spoke pattern the same
+experiment gives 38.0% against 14.4% — the same direction, but a factor of 2.6 rather than
+16. <strong>The "16×" is not reproducible across source designs, and the percentage ratio
+was never the right way to say it anyway — see the scale-factor test below, which compares
+both effects in dB and puts the real advantage at 3.0×.</strong> The qualitative point
+survives: which scale factor you pick matters more than which kernel you pick. The size of
+that margin does not.</p>
 
 <h2>Guides</h2>
 
@@ -145,6 +151,14 @@ factor gains roughly 16× more surviving detail — far more than any choice of 
   <span class="metric">same Referer for plain / nofollow / ugc</span>
 </a>
 
+<a class="card" href="/upgolab-anisotropic-upscale/">
+  <h3>Stretching One Axis: Upscaling That Is Not the Same on Both</h3>
+  <p>Every other guide scales both axes by the same number. This one measures the
+  asymmetric case — 4:3 into 16:9, anamorphic sources, portraits that are soft on one
+  side. Choosing the right axis is worth more than the whole kernel ladder.</p>
+  <span class="metric">one axis vs two: +2.2–2.4 dB</span>
+</a>
+
 <a class="card" href="/upgolab-tools/">
   <h3>All Guides — Full Index With Metrics</h3>
   <p>The complete list of every measured note in this cluster, one card per guide with the
@@ -159,6 +173,151 @@ reproduction snippet. If a claim here contradicts what you measure on your own f
 your measurement — the numbers come from specific test patterns, and your content is not one
 of them.</p>
 </div>
+
+<h2>Do the four metrics in this cluster agree with each other?</h2>
+
+<p>Every guide here scores its experiments with some subset of four numbers: PSNR,
+HF retention, phase coherence, and ink coverage. This section asks the question those
+guides individually could not: <strong>if you rank four resampling kernels by each of
+those metrics, do you get the same answer?</strong> The answer is no — and the
+disagreement is systematic, not noise.</p>
+
+<p>Design: four synthetic sources at 512×512 with deliberately different frequency
+structure, downsampled to 128×128 with an area filter, then brought back to 512×512 with
+ffmpeg at <code>flags=neighbor|bilinear|bicubic|lanczos</code>. Sixteen
+(source, kernel) pairs. Each pair scored by all four metrics against the ground truth it
+was derived from.</p>
+
+<table>
+<thead><tr><th>Source</th><th>Kernel</th><th class="num">PSNR</th><th class="num">HF ret.</th><th class="num">Phase</th><th class="num">Ink Δ</th></tr></thead>
+<tbody>
+<tr><td>siemens</td><td>nearest</td><td class="num">19.77</td><td class="num">148.7%</td><td class="num">0.024</td><td class="num">−0.14</td></tr>
+<tr><td>siemens</td><td>bilinear</td><td class="num">22.25</td><td class="num">22.3%</td><td class="num">0.077</td><td class="num">−1.09</td></tr>
+<tr><td>siemens</td><td>bicubic</td><td class="num">24.12</td><td class="num">14.5%</td><td class="num">0.106</td><td class="num">−1.43</td></tr>
+<tr><td>siemens</td><td>lanczos</td><td class="num">24.56</td><td class="num">13.0%</td><td class="num">0.096</td><td class="num">−1.83</td></tr>
+<tr><td>mandelbrot</td><td>nearest</td><td class="num">32.58</td><td class="num">57.4%</td><td class="num">0.389</td><td class="num">−0.79</td></tr>
+<tr><td>mandelbrot</td><td>bilinear</td><td class="num">33.95</td><td class="num">15.1%</td><td class="num">0.611</td><td class="num">−1.51</td></tr>
+<tr><td>mandelbrot</td><td>bicubic</td><td class="num">34.63</td><td class="num">13.9%</td><td class="num">0.613</td><td class="num">−1.47</td></tr>
+<tr><td>mandelbrot</td><td>lanczos</td><td class="num">34.79</td><td class="num">13.8%</td><td class="num">0.611</td><td class="num">−1.70</td></tr>
+<tr><td>lineart</td><td>nearest</td><td class="num">16.82</td><td class="num">59.7%</td><td class="num">0.360</td><td class="num">−5.50</td></tr>
+<tr><td>lineart</td><td>bilinear</td><td class="num">16.26</td><td class="num">7.1%</td><td class="num">0.033</td><td class="num">−5.24</td></tr>
+<tr><td>lineart</td><td>bicubic</td><td class="num">16.39</td><td class="num">3.5%</td><td class="num">0.195</td><td class="num">−5.20</td></tr>
+<tr><td>lineart</td><td>lanczos</td><td class="num">16.32</td><td class="num">4.5%</td><td class="num">0.011</td><td class="num">−5.15</td></tr>
+<tr><td>gradient</td><td>nearest</td><td class="num">36.90</td><td class="num">93.7%</td><td class="num">0.709</td><td class="num">−0.17</td></tr>
+<tr><td>gradient</td><td>bilinear</td><td class="num">36.60</td><td class="num">32.4%</td><td class="num">0.670</td><td class="num">−0.34</td></tr>
+<tr><td>gradient</td><td>bicubic</td><td class="num">37.06</td><td class="num">38.6%</td><td class="num">0.678</td><td class="num">−0.21</td></tr>
+<tr><td>gradient</td><td>lanczos</td><td class="num">37.03</td><td class="num">40.5%</td><td class="num">0.677</td><td class="num">−0.15</td></tr>
+</tbody>
+</table>
+
+<p>Ranking the four kernels per source and counting how often any two metrics nominate the
+same winner gives <strong>6 agreements out of 24 pairs — 25%</strong>. Across the whole
+16-row table, Spearman rank correlation is <strong>+0.90 between PSNR and phase
+coherence</strong>, but only <strong>+0.42 between PSNR and HF retention</strong>, and
+<strong>+0.39 between HF retention and phase coherence</strong>. PSNR and phase coherence
+are largely the same measurement wearing two names. HF retention measures something else.</p>
+
+<h3>The cost of trusting the wrong metric</h3>
+
+<p>Regret = how many dB below the PSNR-optimal kernel you land if you follow a metric's
+winner. Following HF retention costs a mean of <strong>1.79 dB</strong> and up to
+<strong>4.79 dB</strong> on the Siemens star; following ink coverage costs a mean of
+<strong>1.88 dB</strong>, the same worst case.</p>
+
+<table>
+<thead><tr><th>Metric followed</th><th class="num">Mean regret</th><th class="num">Worst case</th><th class="num">Distinct winners / 4</th></tr></thead>
+<tbody>
+<tr><td>PSNR</td><td class="num">0.00</td><td class="num">0.00</td><td class="num">3</td></tr>
+<tr><td>HF retention</td><td class="num">1.79</td><td class="num">4.79</td><td class="num">1</td></tr>
+<tr><td>Phase coherence</td><td class="num">0.19</td><td class="num">0.44</td><td class="num">2</td></tr>
+<tr><td>Ink coverage</td><td class="num">1.88</td><td class="num">4.79</td><td class="num">2</td></tr>
+</tbody>
+</table>
+
+<p>The last column is the diagnostic that matters. <strong>HF retention picked
+<code>nearest</code> for all four content classes</strong> — one answer regardless of
+input. A metric whose winner never changes is not measuring your content, it is measuring
+its own bias. PSNR picked three different winners across the same four sources.</p>
+
+<h3>Why HF retention picks the worst kernel</h3>
+
+<p>On the Siemens star, <code>nearest</code> scores <strong>148.7% HF retention</strong> —
+it holds 49% <em>more</em> high-frequency energy than the ground truth. That is not
+recovered detail; it is block structure. The star's spokes are near-Nyquist at the centre,
+and pixel replication turns them into hard-edged squares that read as broadband energy to
+an FFT. The same kernel scores <strong>19.77 dB PSNR</strong> and <strong>0.024 phase
+coherence</strong> on the same image, both the worst of the four.</p>
+
+<p>On the line-art source the effect inverts in magnitude: <code>nearest</code> reaches
+only <strong>59.7%</strong> HF retention while still winning the HF ranking, because every
+other kernel smooths the thin 2-pixel strokes away and leaves nothing for the ratio to
+count. So HF retention votes for <code>nearest</code> both when it overshoots by 49% and
+when it undershoots by 40%. The metric is not sign-aware.</p>
+
+<div class="callout">
+<p><strong>What to do with this.</strong> Never compare kernels across two different
+metrics and treat agreement as confirmation — here the two most-trusted metrics disagree
+on 75% of pairs. Pick the metric that encodes the failure you actually care about: PSNR
+or phase coherence if you want the image to match the source, ink coverage if thin strokes
+must survive, and HF retention only as a sign-blind hint, never as a tiebreaker.</p>
+</div>
+
+<h3>Reproduce it</h3>
+
+<pre><code># 4 sources at 512², down 4x with area, up 4x with each kernel
+for k in neighbor bilinear bicubic lanczos; do
+  ffmpeg -y -v error -i gt.png -vf scale=128:128:flags=area small.png
+  ffmpeg -y -v error -i small.png -vf scale=512:512:flags=$k out_$k.png
+done</code></pre>
+
+<p>Metrics as defined in the method notes below. Full script and the JSON of all 16 rows:
+the ranking is bit-identical across repeated runs, so any disagreement you get is a
+difference in the source images, not in the measurement.</p>
+
+<h2>Scale factor versus kernel, compared in dB</h2>
+
+<p>The HF percentages above are a ratio of two ratios, which is why they swing so widely
+between source designs. The honest comparison is a two-factor grid: five scale factors
+(2×, 3×, 4×, 6×, 8×) crossed with four kernels, on three ground-truth sources at 768×768,
+each downsampled with an area filter and brought back up. Fifteen cells per source, PSNR
+in dB against the unmodified original.</p>
+
+<table>
+<thead><tr><th>Source</th><th class="num">2×</th><th class="num">3×</th><th class="num">4×</th><th class="num">6×</th><th class="num">8×</th></tr></thead>
+<tbody>
+<tr><td>siemens · lanczos</td><td class="num">33.90</td><td class="num">30.39</td><td class="num">27.95</td><td class="num">24.51</td><td class="num">22.09</td></tr>
+<tr><td>siemens · bicubic</td><td class="num">33.50</td><td class="num">29.99</td><td class="num">27.52</td><td class="num">24.07</td><td class="num">21.64</td></tr>
+<tr><td>siemens · bilinear</td><td class="num">31.45</td><td class="num">28.29</td><td class="num">25.63</td><td class="num">22.23</td><td class="num">19.88</td></tr>
+<tr><td>siemens · nearest</td><td class="num">28.16</td><td class="num">24.68</td><td class="num">22.50</td><td class="num">19.65</td><td class="num">17.78</td></tr>
+<tr><td>mandelbrot · lanczos</td><td class="num">40.42</td><td class="num">38.23</td><td class="num">36.79</td><td class="num">34.91</td><td class="num">33.62</td></tr>
+<tr><td>mandelbrot · nearest</td><td class="num">38.90</td><td class="num">36.35</td><td class="num">34.70</td><td class="num">32.63</td><td class="num">31.28</td></tr>
+<tr><td>texture · lanczos</td><td class="num">33.86</td><td class="num">31.47</td><td class="num">30.74</td><td class="num">28.37</td><td class="num">26.62</td></tr>
+<tr><td>texture · nearest</td><td class="num">32.56</td><td class="num">30.19</td><td class="num">28.81</td><td class="num">27.13</td><td class="num">26.07</td></tr>
+</tbody>
+</table>
+
+<p>Read along a row: what scale factor costs. Read down a column: what kernel choice buys.
+Averaged over the three sources, the full kernel ladder from <code>nearest</code> to
+<code>lanczos</code> is worth <strong>2.83 dB</strong> at any fixed scale. Moving the scale
+factor from 8× to 2× is worth <strong>8.45 dB</strong>. So the scale decision is worth
+<strong>3.0×</strong> the entire kernel decision — the same conclusion as the HF table, but
+stated in a unit where the two effects are actually commensurable.</p>
+
+<table>
+<thead><tr><th>Source</th><th class="num">Kernel range</th><th class="num">Scale range</th><th class="num">Scale ÷ kernel</th></tr></thead>
+<tbody>
+<tr><td>siemens</td><td class="num">5.21 dB</td><td class="num">11.41 dB</td><td class="num">2.19×</td></tr>
+<tr><td>mandelbrot</td><td class="num">2.02 dB</td><td class="num">6.98 dB</td><td class="num">3.45×</td></tr>
+<tr><td>texture</td><td class="num">1.27 dB</td><td class="num">6.95 dB</td><td class="num">5.46×</td></tr>
+</tbody>
+</table>
+
+<p>The ratio is itself content-dependent, and the ordering of the three sources is the
+informative part. On the Siemens star, which has near-Nyquist content everywhere, kernel
+choice still buys 5.21 dB — a real decision. On broadband random texture, which is already
+band-limited by construction, kernel choice buys only <strong>1.27 dB</strong>, while scale
+still buys 6.95 dB. <strong>The more near-Nyquist detail a source has, the more the kernel
+matters.</strong> That is the condition the "16×" number left out.</p>
 
 <h2>Try the tool behind the notes</h2>
 
@@ -185,7 +344,7 @@ seconds rather than a render queue.</p>
 
 <footer>
 Published by <a href="https://upgolab.com">UpgoLAB</a> — AI photo and short-video upscaling
-in the browser. Eleven measured guides; scripts reproducible with ffmpeg and numpy.
+in the browser. Twelve measured guides; scripts reproducible with ffmpeg and numpy.
 </footer>
 </main>
 </body>
