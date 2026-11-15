@@ -151,6 +151,30 @@ that margin does not.</p>
   <span class="metric">same Referer for plain / nofollow / ugc</span>
 </a>
 
+<a class="card" href="/upgolab-tiled-upscale-seams/">
+  <h3>Tiled Upscaling Seams: How Much Context a Tile Needs</h3>
+  <p>Zero-context tiling put 0.45% of pixels more than 2 levels off, 67.6% of them within 2 px
+  of a tile boundary. Three source pixels of context made every tile size bit-identical to the
+  full frame — and blending the overlap was <em>worse</em> than cropping it back off.</p>
+  <span class="metric">3 px = exact · blend −0.7 level · size not monotonic</span>
+</a>
+
+<a class="card" href="/upgolab-jpeg-blocking-upscale/">
+  <h3>JPEG Blocking Under Upscaling</h3>
+  <p>The block seam keeps a constant 1.26–1.30× contrast against its surroundings at every
+  scale factor; what grows is its area, as k². Deblocking after the upscale beat deblocking
+  before it, and sharpening did not selectively amplify the seam.</p>
+  <span class="metric">seam ratio 1.26× at 1× through 8×</span>
+</a>
+
+<a class="card" href="/upgolab-upscale-vs-reshoot/">
+  <h3>Re-Shoot or Upscale? The Break-Even Point</h3>
+  <p>Each doubling costs 4–5 dB, no kernel escapes it, and a 1/9 centre crop beats a full-frame
+  4× by 7.84 dB. Three negative results, including resampling amplifying noise below one 8-bit
+  level.</p>
+  <span class="metric">27.2 → 32.5 dB with viewing distance</span>
+</a>
+
 <a class="card" href="/upgolab-anisotropic-upscale/">
   <h3>Stretching One Axis: Upscaling That Is Not the Same on Both</h3>
   <p>Every other guide scales both axes by the same number. This one measures the
