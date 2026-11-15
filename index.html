@@ -159,12 +159,21 @@ that margin does not.</p>
   <span class="metric">one axis vs two: +2.2–2.4 dB</span>
 </a>
 
+<a class="card" href="/upgolab-chroma-subsampling/">
+  <h3>Chroma Subsampling Before You Upscale: What 4:2:0 Actually Costs</h3>
+  <p>Every other note here measures luma. This one measures the channel that is already
+  destroyed before any upscaler runs: 4:2:0 leaves luma bit-identical (max abs diff 0.0) but
+  drops chroma 9.7 dB. Rebuilding chroma with bilinear beats lanczos by 0.45 dB, and on a real
+  photo 4:4:4 encoded <em>smaller</em> than 4:2:0 at the same CRF.</p>
+  <span class="metric">chroma −9.7 dB, luma unchanged</span>
+</a>
+
 <a class="card" href="/upgolab-tools/">
   <h3>All Guides — Full Index With Metrics</h3>
   <p>The complete list of every measured note in this cluster, one card per guide with the
   headline number from each experiment and a one-line summary of the mechanism it
   demonstrates.</p>
-  <span class="metric">12 pages · every number reproducible</span>
+  <span class="metric">13 pages · every number reproducible</span>
 </a>
 
 <div class="callout">
