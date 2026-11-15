@@ -4,14 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Measured Notes on AI Upscaling — UpgoLAB</title>
-<meta name="description" content="Twelve guides where every number came from ffmpeg and numpy on real files: detail retention, bits per pixel, line art, restoration, and a measured test of what rel=nofollow actually sends.">
+<meta name="description" content="Fourteen guides where every number came from ffmpeg and numpy on real files: detail retention, bits per pixel, line art, restoration, and a measured test of what rel=nofollow actually sends.">
 <link rel="canonical" href="https://celticgemini001.github.io/">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Measured Notes on AI Upscaling">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"CollectionPage",
  "name":"Measured Notes on AI Upscaling",
- "description":"Twelve measured guides to AI upscaling and SEO mechanics.",
+ "description":"Fourteen measured guides to AI upscaling and SEO mechanics.",
  "publisher":{"@type":"Organization","name":"UpgoLAB","url":"https://upgolab.com"}}
 </script>
 <style>
@@ -46,7 +46,7 @@ footer{margin-top:4rem;padding-top:1.4rem;border-top:1px solid var(--line);
 <body>
 <main>
 <h1>Measured Notes on AI Upscaling</h1>
-<p class="lede">Twelve guides where every number came from ffmpeg and numpy on real files.
+<p class="lede">Fourteen guides where every number came from ffmpeg and numpy on real files.
 No vendor benchmarks, no preset-name arguments, and every claim has a reproduction snippet.
 Where a measurement contradicted the hypothesis, the contradiction is what got published.</p>
 
@@ -157,6 +157,16 @@ that margin does not.</p>
   asymmetric case — 4:3 into 16:9, anamorphic sources, portraits that are soft on one
   side. Choosing the right axis is worth more than the whole kernel ladder.</p>
   <span class="metric">one axis vs two: +2.2–2.4 dB</span>
+</a>
+
+<a class="card" href="/upgolab-gamma-vs-linear-light/">
+  <h3>Gamma Space vs Linear Light: Does Resampling in sRGB Actually Cost Quality?</h3>
+  <p>The textbook answer is that resampling must happen in linear light. Measured, it depends
+  on what you measure with: a 50/50 checkerboard averaged in sRGB lands at 127/255 where linear
+  lands at 187/255 — a 60 code-value error — yet on a real photo the same linear pipeline loses
+  0.98 dB, and the winner flips when you compute PSNR in the other colour space. Sharpen in
+  sRGB: unsharp in linear rings 33% harder.</p>
+  <span class="metric">same two files, opposite verdict per metric space</span>
 </a>
 
 <a class="card" href="/upgolab-chroma-subsampling/">
@@ -353,7 +363,7 @@ seconds rather than a render queue.</p>
 
 <footer>
 Published by <a href="https://upgolab.com">UpgoLAB</a> — AI photo and short-video upscaling
-in the browser. Twelve measured guides; scripts reproducible with ffmpeg and numpy.
+in the browser. Fourteen measured guides; scripts reproducible with ffmpeg and numpy.
 </footer>
 </main>
 </body>
