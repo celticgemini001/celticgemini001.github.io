@@ -210,20 +210,36 @@ that margin does not.</p>
   <span class="metric">4/3 − 5/4 = 0.86 dB · engine = 0.07 dB · 4 of 8 crops</span>
 </a>
 
-<a class="card" href="/upgolab-upscale-vs-reshoot/">
-    <h3>Re-shoot or Upscale? The Break-Even Point, Measured in Decibels and Millimetres</h3>
-  <p>A genuine 1080×1620 capture as ground truth, three quarters of it thrown away and put back
-  with Lanczos: the gap is measured in dB, then converted into the viewing distance and print size
-  where it stops being visible.</p>
-  <span class="metric">break-even in dB and mm · three results against the hypothesis</span>
-</a>
-
 <a class="card" href="/upgolab-tools/">
   <h3>All Guides — Full Index With Metrics</h3>
   <p>The complete list of every measured note in this cluster, one card per guide with the
   headline number from each experiment and a one-line summary of the mechanism it
   demonstrates.</p>
   <span class="metric">20 pages · every number reproducible</span>
+</a>
+
+<a class="card" href="/upgolab-bit-depth-banding/">
+  <h3>8-bit vs 10-bit Banding</h3>
+  <p>Banding widens when you upscale, and dither cannot put back the levels the upscale interpolated. Measured on a 10-step gradient at 2x, 3x and 4x.</p>
+  <span class="metric">band count 10 -> 4 at 4x</span>
+</a>
+
+<a class="card" href="/upgolab-output-format-after-upscale/">
+  <h3>Output Format After Upscaling</h3>
+  <p>JPEG, WebP and AVIF re-encoded from a 4K master. AVIF buys 3.28 dB over JPEG and still loses high-frequency energy, because every lossy format does.</p>
+  <span class="metric">AVIF +3.28 dB vs JPEG q68</span>
+</a>
+
+<a class="card" href="/upgolab-sharpen-before-or-after-upscale/">
+  <h3>Sharpen Before or After Upscaling?</h3>
+  <p>The two orders are the same operation in float — 0.002 dB apart — and diverge only because an 8-bit or JPEG step sits between them. 12/12 real cases favour 'after'.</p>
+  <span class="metric">float gap 0.002 dB · 8-bit gap 0.138 dB</span>
+</a>
+
+<a class="card" href="/upgolab-noise-and-grain-upscaling/">
+  <h3>Noise and Grain Under Upscaling</h3>
+  <p>Upscaling does not amplify noise: amplitude falls to 0.66x-0.89x. It widens the remainder into clumps 2.6x the source pixel, and pre-denoise loses until sigma 3.</p>
+  <span class="metric">gain 0.66-0.89x · clump 2.62 px</span>
 </a>
 
 <div class="callout">
