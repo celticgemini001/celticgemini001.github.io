@@ -4,14 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Measured Notes on AI Upscaling — UpgoLAB</title>
-<meta name="description" content="Twenty-two guides where every number came from ffmpeg and numpy on real files: detail retention, bits per pixel, line art, restoration, and a measured test of what rel=nofollow actually sends.">
+<meta name="description" content="Twenty-three guides where every number came from ffmpeg and numpy on real files: detail retention, bits per pixel, line art, restoration, and a measured test of what rel=nofollow actually sends.">
 <link rel="canonical" href="https://celticgemini001.github.io/">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Measured Notes on AI Upscaling">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"CollectionPage",
  "name":"Measured Notes on AI Upscaling",
- "description":"Twenty-two measured guides to AI upscaling and SEO mechanics.",
+ "description":"Twenty-three measured guides to AI upscaling and SEO mechanics.",
  "publisher":{"@type":"Organization","name":"UpgoLAB","url":"https://upgolab.com"}}
 </script>
 <style>
@@ -46,7 +46,7 @@ footer{margin-top:4rem;padding-top:1.4rem;border-top:1px solid var(--line);
 <body>
 <main>
 <h1>Measured Notes on AI Upscaling</h1>
-<p class="lede">Twenty-two guides where every number came from ffmpeg and numpy on real files.
+<p class="lede">Twenty-three guides where every number came from ffmpeg and numpy on real files.
 No vendor benchmarks, no preset-name arguments, and every claim has a reproduction snippet.
 Where a measurement contradicted the hypothesis, the contradiction is what got published.</p>
 
@@ -221,7 +221,7 @@ that margin does not.</p>
   <p>The complete list of every measured note in this cluster, one card per guide with the
   headline number from each experiment and a one-line summary of the mechanism it
   demonstrates.</p>
-  <span class="metric">22 guides · every number reproducible</span>
+  <span class="metric">23 guides · every number reproducible</span>
 </a>
 
 <a class="card" href="/upgolab-bit-depth-banding/">
@@ -240,6 +240,15 @@ that margin does not.</p>
   <h3>Sharpen Before or After Upscaling?</h3>
   <p>The two orders are the same operation in float — 0.002 dB apart — and diverge only because an 8-bit or JPEG step sits between them. 12/12 real cases favour 'after'.</p>
   <span class="metric">float gap 0.002 dB · 8-bit gap 0.138 dB</span>
+</a>
+
+<a class="card" href="/upgolab-halftone-dots-upscaling/">
+  <h3>Halftone Dots Under Upscaling: The Lattice Scales, the Detail Doesn't</h3>
+  <p>A screened print carries a dot lattice at a fixed pitch. Measured across 5 pitches and 4
+  resamplers: the lattice frequency tracks the scale factor to within 0.56%, nearest-neighbour
+  bloats fractional factors by 3.2×, and killing the dots needs a filter that blurs an edge to
+  1.1–1.3× the dot pitch.</p>
+  <span class="metric">lattice ±0.56% · nearest 3.2× rougher at F=1.5 · descreen σ = pitch/2</span>
 </a>
 
 <a class="card" href="/upgolab-noise-and-grain-upscaling/">
@@ -425,7 +434,7 @@ seconds rather than a render queue.</p>
 
 <footer>
 Published by <a href="https://upgolab.com">UpgoLAB</a> — AI photo and short-video upscaling
-in the browser. Twenty-two measured guides; scripts reproducible with ffmpeg and numpy.
+in the browser. Twenty-three measured guides; scripts reproducible with ffmpeg and numpy.
 </footer>
 </main>
 </body>
