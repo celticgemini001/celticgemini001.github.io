@@ -4,14 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Measured Notes on AI Upscaling — UpgoLAB</title>
-<meta name="description" content="Twenty-three guides where every number came from ffmpeg and numpy on real files: detail retention, bits per pixel, line art, restoration, and a measured test of what rel=nofollow actually sends.">
+<meta name="description" content="Twenty-four guides where every number came from ffmpeg and numpy on real files: detail retention, bits per pixel, line art, restoration, and a measured test of what rel=nofollow actually sends.">
 <link rel="canonical" href="https://celticgemini001.github.io/">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Measured Notes on AI Upscaling">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"CollectionPage",
  "name":"Measured Notes on AI Upscaling",
- "description":"Twenty-three measured guides to AI upscaling and SEO mechanics.",
+ "description":"Twenty-four measured guides to AI upscaling and SEO mechanics.",
  "publisher":{"@type":"Organization","name":"UpgoLAB","url":"https://upgolab.com"}}
 </script>
 <style>
@@ -46,7 +46,7 @@ footer{margin-top:4rem;padding-top:1.4rem;border-top:1px solid var(--line);
 <body>
 <main>
 <h1>Measured Notes on AI Upscaling</h1>
-<p class="lede">Twenty-three guides where every number came from ffmpeg and numpy on real files.
+<p class="lede">Twenty-four guides where every number came from ffmpeg and numpy on real files.
 No vendor benchmarks, no preset-name arguments, and every claim has a reproduction snippet.
 Where a measurement contradicted the hypothesis, the contradiction is what got published.</p>
 
@@ -216,12 +216,20 @@ that margin does not.</p>
   <span class="metric">cutoff error 0.28% · scale shift &lt;0.5% · gain +6.5 to -9.8 dB</span>
 </a>
 
+<a class="card" href="/upgolab-hdr-upscaling-bit-depth/">
+  <h3>HDR Upscaling: 8-bit vs 16-bit</h3>
+  <p>A 16-bit tone-mapped intermediate holds a known ripple at 100% where 8-bit
+  holds 0% — but only above display code 253. Below 232 the measured difference is
+  zero, and after a +2 stop lift 8-bit and 16-bit are identical on every band.</p>
+  <span class="metric">0% vs 100% above code 253 · 0.00 dB at +2 stops · 19.49 stops in 8-bit</span>
+</a>
+
 <a class="card" href="/upgolab-tools/">
   <h3>All Guides — Full Index With Metrics</h3>
   <p>The complete list of every measured note in this cluster, one card per guide with the
   headline number from each experiment and a one-line summary of the mechanism it
   demonstrates.</p>
-  <span class="metric">23 guides · every number reproducible</span>
+  <span class="metric">24 guides · every number reproducible</span>
 </a>
 
 <a class="card" href="/upgolab-bit-depth-banding/">
@@ -434,7 +442,7 @@ seconds rather than a render queue.</p>
 
 <footer>
 Published by <a href="https://upgolab.com">UpgoLAB</a> — AI photo and short-video upscaling
-in the browser. Twenty-three measured guides; scripts reproducible with ffmpeg and numpy.
+in the browser. Twenty-four measured guides; scripts reproducible with ffmpeg and numpy.
 </footer>
 </main>
 </body>
