@@ -224,12 +224,20 @@ that margin does not.</p>
   <span class="metric">0% vs 100% above code 253 · 0.00 dB at +2 stops · 19.49 stops in 8-bit</span>
 </a>
 
+<a class="card" href="/upgolab-exif-orientation-upscale/">
+  <h3>EXIF Orientation vs Upscale Order</h3>
+  <p>All eight EXIF orientation values are bit-exact pixel permutations, so rotating before or
+  after an upscale changes 0.00% of pixels. Upscale-first still wins 0.73-0.89 dB at odd angles.
+  ffmpeg autorotate with a hardcoded size gave a 55.6% aspect error.</p>
+  <span class="metric">8/8 tags bit-exact · +0.73–0.89 dB · 55.6% AR error · 12.6 dB loss</span>
+</a>
+
 <a class="card" href="/upgolab-tools/">
   <h3>All Guides — Full Index With Metrics</h3>
   <p>The complete list of every measured note in this cluster, one card per guide with the
   headline number from each experiment and a one-line summary of the mechanism it
   demonstrates.</p>
-  <span class="metric">24 guides · every number reproducible</span>
+  <span class="metric">25 guides · every number reproducible</span>
 </a>
 
 <a class="card" href="/upgolab-bit-depth-banding/">
