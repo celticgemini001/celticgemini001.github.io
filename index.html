@@ -76,6 +76,14 @@ that margin does not.</p>
 
 <h2>Guides</h2>
 
+<a class="card" href="/upgolab-letterbox-before-upscale/">
+  <h3>Letterbox Bars Before an Upscale</h3>
+  <p>A 1440x1080 picture inside a 1920x1080 frame: 25% of the pixels are not
+  picture. Crop-first is 1.37x faster and keeps the active edge clean — but the
+  whole-frame PSNR reports 20.29 vs 20.28, so the defect is invisible to it.</p>
+  <span class="metric">17.79 dB at the edge · 0.01 dB whole frame · limit 24 vs bar 24</span>
+</a>
+
 <a class="card" href="/upgolab-ai-upscaler-guide/">
   <h3>AI Upscaling Explained: What It Recovers and What It Invents</h3>
   <p>Interpolation versus reconstruction, why PSNR rewards blur, and the transcode-first
