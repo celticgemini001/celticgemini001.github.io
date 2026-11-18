@@ -29,6 +29,10 @@ a{color:var(--acc)}
 .card:hover{border-color:var(--acc)}
 .card h3{margin:0 0 .3rem;font-size:1.06rem;color:var(--acc);letter-spacing:-.01em}
 .card p{margin:0;font-size:.94rem;color:var(--mut);line-height:1.55}
+.card ul.tightlist{margin:.5rem 0 .6rem;padding-left:1.1rem}
+.card ul.tightlist li{font-size:.9rem;color:var(--mut);line-height:1.5;margin:.15rem 0}
+ul.tightlist{margin:.7rem 0 1rem;padding-left:1.3rem}
+ul.tightlist li{margin:.45rem 0;line-height:1.65}
 .metric{display:inline-block;background:#f2f5fa;color:#3a4250;border-radius:5px;
  padding:.1rem .45rem;font-size:.8rem;font-variant-numeric:tabular-nums;margin-top:.45rem}
 table{width:100%;border-collapse:collapse;margin:1.3rem 0;font-size:.93rem}
@@ -245,6 +249,11 @@ that margin does not.</p>
   <p>The complete list of every measured note in this cluster, one card per guide with the
   headline number from each experiment and a one-line summary of the mechanism it
   demonstrates.</p>
+  <ul class="tightlist">
+    <li><a href="/upgolab-tools/compare.html">Upscaler comparison: UpgoLAB vs Upscayl vs Video2X vs Topaz</a></li>
+    <li><a href="/upgolab-tools/topaz-alternative.html">A free alternative to Topaz Video AI</a></li>
+    <li><a href="/upgolab-tools/blurry-video.html">Making a blurry video sharp without halos</a></li>
+  </ul>
   <span class="metric">25 guides · every number reproducible</span>
 </a>
 
@@ -281,12 +290,45 @@ that margin does not.</p>
   <span class="metric">gain 0.66-0.89x · clump 2.62 px</span>
 </a>
 
+<p>Three more worked examples sit in the tools hub: <a href="/upgolab-tools/product-photos.html">product photos that keep their edges</a>,
+<a href="/upgolab-tools/anime-upscale.html">anime and line art without broken lines</a>, and
+<a href="/upgolab-tools/no-gpu.html">upscaling on a machine with no GPU</a>.</p>
+
 <div class="callout">
 <p><strong>How to use these.</strong> Each page states a mechanism, a measurement, and a
 reproduction snippet. If a claim here contradicts what you measure on your own file, trust
 your measurement — the numbers come from specific test patterns, and your content is not one
 of them.</p>
 </div>
+
+<h2>The four conditions that break an upscale before the resampler runs</h2>
+
+<p>Four guides in this cluster cover defects that are already baked into the source file, so
+the choice of resampling kernel barely matters — the damage happened upstream. They are
+grouped here because they share a signature: the output looks wrong in a way no amount of
+sharpening fixes.</p>
+
+<ul class="tightlist">
+<li><a href="/upgolab-anamorphic-sd-upscale/">Anamorphic SD before upscaling</a> — 720×480 with
+SAR 32:27 packs 16:9 into a grid 15.6% coarser horizontally (1.185× stretch). Detail above
+360 cycles/width folds back on itself: a 400-cycle test pattern lands at 320, a 600-cycle one
+at 120. PSNR ranked a 15.7%-wrong image first.</li>
+<li><a href="/upgolab-color-matrix-and-range/">Colour matrix and range before upscaling</a> — a
+bt709/bt601 mismatch and a limited/full range mismatch tint the output identically to the eye,
+but cost wildly different amounts: <strong>0.02 dB</strong> on mid-tones versus <strong>16 dB</strong>
+on saturated colour.</li>
+<li><a href="/upgolab-gif-palette-upscaling/">GIF and palette limits at 1× to 8×</a> — a GIF
+holds 256 colours and upscaling adds none, it spreads them into bands. Measured with
+palettegen/paletteuse, band width grows <strong>1.58 → 6.34 px</strong> as the factor rises.</li>
+<li><a href="/upgolab-interlaced-video-upscale/">Interlaced video and the 540-line ceiling</a> —
+five deinterlacers scored against a known 1080p reference. Field Nyquist puts an exact null at
+<strong>540 lines</strong>, which is why deinterlacing order matters more than the filter
+you pick.</li>
+</ul>
+
+<p>If your source is one of these four, fix it first and re-encode; upscaling an anamorphic,
+mis-matrixed, 256-colour or interlaced file mostly amplifies the defect. The rest of this
+index assumes you have already cleared that step.</p>
 
 <h2>Do the four metrics in this cluster agree with each other?</h2>
 
